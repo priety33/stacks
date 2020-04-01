@@ -10,7 +10,7 @@ public:
         {
             if(s.empty()) 
             {
-                left[i]=-1;
+                left[i]=-1; //if no smaller element on left, take smallest index on left =-1
                 s.push(i);
             }
             else 
@@ -25,7 +25,7 @@ public:
         {
             if(p.empty()) 
             {
-                right[i]=n;
+                right[i]=n; //if no smaller element on right, take smallest index on right= n (end of array)
                 p.push(i);
             }
             else 
