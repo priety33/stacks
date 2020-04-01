@@ -4,7 +4,7 @@ public:
         stack<string> p;
         for(int i=s.size()-1;i>=0;i--)
         {
-            if(s[i]=='[')
+            if(s[i]=='[') //indicates a number will be encountered before this now
             {
                 int num=0;
                 i--;
