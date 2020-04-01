@@ -42,3 +42,46 @@ public:
         return area;
     }
 };
+
+
+// can also be done using single stack- more efficient (coding blocks video)
+           int area;
+            stack<int> s;
+            for(int j=0;j<m;j++)
+            {
+                if(s.empty() || height[j]>=height[s.top()]) s.push(j);
+                else
+                {
+                    while(!s.empty() && height[s.top()]>height[j])
+                    {
+                        int curht=height[s.top()];
+                        s.pop();
+                        if(s.empty())
+                        {
+                            area=curht*j;
+                        }
+                        else
+                        {
+                            area=curht*(j-s.top()-1);
+                        }
+                        ans=max(ans,area);
+                    }
+                    s.push(j);
+                }
+            }
+            while(!s.empty())
+                {
+                        int area;
+                        int curht=height[s.top()];
+                        s.pop();
+                        if(s.empty())
+                        {
+                            area=curht*m; //m is the index, as all the elements left now int the stack, do not have any smaller element to their right, otherwise they would have been popped earlier
+                        }
+                        else
+                        {
+                            area=curht*(m-s.top()-1);
+                        }
+                        ans=max(ans,area);
+                }
+             return ans;
