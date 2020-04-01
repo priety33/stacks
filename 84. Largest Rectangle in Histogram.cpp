@@ -4,38 +4,35 @@ public:
         int n=heights.size();
         if(n==0) return 0;
         int left[n], right[n];
-        memset(left, -1, sizeof(left));
-        memset(right, -1, sizeof(right));
-        stack <int> lefts, rights;
-        int area=0;
+        int area=INT_MIN;
+        stack<int> s;
         for(int i=0;i<n;i++)
         {
-            if(rights.empty() || heights[rights.top()]<heights[i]) rights.push(i);
+            if(s.empty()) 
+            {
+                left[i]=-1;
+                s.push(i);
+            }
             else 
             {
-                while(!rights.empty() && heights[rights.top()]>heights[i] )
-                {
-                    right[rights.top()]=i;
-                    rights.pop();
-                }
-                rights.push(i);
+                while(!s.empty() && heights[s.top()]>=heights[i]) s.pop();
+                left[i]= (s.empty())? -1: s.top();
+                s.push(i);
             }
         }
-        for(int i=0;i<n;i++)
-        {
-            if(right[i]==-1) right[i]=n;
-        }
+        stack<int> p;
         for(int i=n-1;i>=0;i--)
         {
-            if(lefts.empty() || heights[lefts.top()]<heights[i]) lefts.push(i);
+            if(p.empty()) 
+            {
+                right[i]=n;
+                p.push(i);
+            }
             else 
             {
-                while(!lefts.empty() && heights[lefts.top()]>heights[i])
-                {
-                    left[lefts.top()]=i;
-                    lefts.pop();
-                }
-                lefts.push(i);
+                while(!p.empty() && heights[p.top()]>=heights[i]) p.pop();
+                right[i]= (p.empty())? n: p.top();
+                p.push(i);
             }
         }
         for(int i=0;i<n;i++)
