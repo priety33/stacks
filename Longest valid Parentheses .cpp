@@ -37,45 +37,42 @@ Whenever left becomes equal to right, we calculate the length of the current val
 of maximum length substring found so far. If right>left we reset left and right to 0.
 
 Next, we start traversing the string from right to left and similar procedure is applied. here we reset when left>right. */
+//left->open, right->close.
 
-#include <bits/stdc++.h>
-using namespace std;
-
-int main() {
-	int t; cin>>t;
-	while(t--)
-	{
-	    string s; cin>>s;
-	    int left=0, right=0;
-	    int len=0;
-      //left to right
-	    for(int i=0;i<s.length();i++)
-	    {
-	        if(s[i]=='(') left++;
-	        else right++;
-	        
-	        if(left==right) len=max(len,2*left);
-	        if(left<right)
-	        {
-	            left=0;
-	            right=0;
-	        }
-	    }
-	    left=0, right=0;
-      //right to left
-	    for(int i=s.length()-1;i>=0;i--)
-	    {
-	        if(s[i]=='(') left++;
-	        else right++;
-	        
-	        if(left==right) len=max(len, 2*left);
-	        if(left>right)
-	        {
-	            left=0;
-	            right=0;
-	        }
-	    }
-	    cout<<len<<endl;
-	}
-	return 0;
-}
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        int l=s.length();
+        if(l==0) return 0;
+        int len=0;
+        int open=0, close=0;
+	    //left to right
+        for(int i=0;i<l;i++)
+        {
+            if(s[i]=='(') open++;
+            else close++;
+            
+            if(open==close) len=max(len ,2*open);
+            else if(close > open)
+            {
+                open=0;
+                close=0;
+            }
+        }
+        open=0; close=0;
+	    //right to left
+        for(int i=l-1; i>=0; i--)
+        {
+            if(s[i]=='(') open++;
+            else close++;
+            
+            if(open==close) len=max(len ,2*open);
+            else if(open > close)
+            {
+                open=0;
+                close=0;
+            }
+        }
+        return len;
+    }
+};
